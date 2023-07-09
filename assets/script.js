@@ -20,54 +20,58 @@
 //
 // TODO: Add code to display the current date in the header of the page.
 
-//Function to render the events on the calender
+ $(document).ready(function() {
+      // Display the current day at the top of the calendar
+      const currentDay = dayjs().format('dddd, MMMM D, YYYY');
+      $('#currentDay').text(currentDay);
 
- // An array to store events
- $(function () {
-  //using day.js to pull up the current date and formatiing it to display in a user friendly way
-  const curDay = dayjs();
-  $('#currentDay').text(curDay.format('dddd, MMMM DD, YYYY'));
-  const currentHour = dayjs().format('H');
-  
-  //array for formating the times slots
-  let timeSlots = [9,10,11,12,13,14,15,16,17]
-  let timeSlotsIndex = 0
-  
-  //function for switching the class of the HTML elements so they can display the correct color for past/present/future
-  function classSwitch() {
-    var currentTimeSlot = "hour-"+timeSlots[timeSlotsIndex];
-    var elementID = '#' + currentTimeSlot
-    //pulls data from local storage depending on the element id
-    var savedInput = localStorage.getItem(currentTimeSlot);
-  
-      if (currentHour < timeSlots[timeSlotsIndex]) {
-        $( function() {
-          $(elementID).ready(function() {
-          $(elementID).switchClass( ".past", "future", 0);
-          });
-        } );
-      } else if ( currentHour === timeSlots[timeSlotsIndex]) {
-        $( function() {
-          $(elementID).ready(function() {
-          $(elementID).switchClass( ".past", "present", 0);
-          });
-        } );
-      };
-      //inserts the data from local storage to the text areas for each task
-    $(elementID).children("textarea").text(savedInput);
-    timeSlotsIndex++;
-      //stops the function after the last timeslot is modified
-    if (timeSlotsIndex <= timeSlots.length) {
-        classSwitch();
-    }
-  
-  };
-  //calls the classSwitch function on page load
-  $(document).ready(function() {
-    classSwitch();
-  });
-  
-  //save button for saving teh data in the text area
+      // An array to store events
+      let events = JSON.parse(localStorage.getItem('events')) || [];
+
+      // Function to render the timeblocks
+      function renderTimeblocks() {
+        $('#timeblocks').empty();
+        const currentHour = dayjs().hour();
+        for (let hour = 9; hour <= 17; hour++) {
+          const time = dayjs().hour(hour).minute(0).format('h:mm A');
+          const event = events.find(e => e.hour === hour);
+          const eventText = event ? event.text : '';
+          let timeblockClass = 'timeblock';
+          if (hour < currentHour) {
+            timeblockClass += ' past';
+          } else if (hour === currentHour) {
+            timeblockClass += ' present';
+          } else {
+            timeblockClass += ' future';
+          }
+          const timeblockHTML = `<div class="${timeblockClass}" data-hour="${hour}"><div class="time">${time}</div><textarea class="event-text">${eventText}</textarea><button class="save-btn">Save</button></div>`;
+          $('#timeblocks').append(timeblockHTML);
+        }
+      }
+
+      // Function to save an event
+      function saveEvent(hour, text) {
+        const eventIndex = events.findIndex(e => e.hour === hour);
+        if (eventIndex !== -1) {
+          events[eventIndex].text = text;
+        } else {
+          events.push({ hour, text });
+        }
+        localStorage.setItem('events', JSON.stringify(events));
+      }
+
+      // Event listener for saving an event
+      $(document).on('click', '.save-btn', function() {
+        const hour = $(this).parent().data('hour');
+        const text = $(this).siblings('.event-text').val();
+        saveEvent(hour, text);
+      });
+
+      // Render the timeblocks
+      renderTimeblocks();
+    });
+
+  //save button for saving the data in the text area
   $(".saveBtn").on( "click", function(event) {
       event.preventDefault();
       //$this is used to target the current element being clicked on and finding the parent ID name
@@ -81,5 +85,4 @@
         //saves the value in local storage with the name of the parent element as the name and the text value as the value
         localStorage.setItem(timeSlotEl, saveInput);
   } );
-  
-});
+
