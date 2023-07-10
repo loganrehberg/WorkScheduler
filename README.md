@@ -8,4 +8,4 @@ To install you can either clone the repo and open the webpage VIA the index.HTML
 
 ## Screenshot of the Deployed Website
 
-![Screenshot of the deployed webpage](C:\Users\fuzzy\bootcamp\classwork\NU-VIRT-FSF-PT-05-2023-U-LOLC\05-Third-Party-APIs\02-Challenge\WorkScheduler\assets\screenshot.png "<WorkSchedulerScreenshot>")
+![Alt text](/assets/images/screenshot.png "<title>")
