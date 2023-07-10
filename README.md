@@ -8,4 +8,4 @@ To install you can either clone the repo and open the webpage VIA the index.HTML
 
 ## Screenshot of the Deployed Website
 
-![Alt text](/assets/images/screenshot.png "<title>")
+![Alt text](05-Third-Party-APIs\02-Challenge\WorkScheduler\assets\screenshot.png)
