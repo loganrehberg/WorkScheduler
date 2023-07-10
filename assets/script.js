@@ -35,6 +35,13 @@ function setColorCoding() {
   $('.time-block').each(function(){
     var timeBlockHour = parseInt($(this).attr('id').split('-')[1]);
 
-    
-  })
+    // add appropriate class based on the current hour
+    if (timeBlockHour < currentHour) {
+      $(this).addClass('past');
+    }else if (timeBlockHour === currentHour){
+      $(this).addClass('present');
+    } else {
+      $(this).addClass('future');
+    }
+  });
 }
