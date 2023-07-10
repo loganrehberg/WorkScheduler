@@ -45,3 +45,22 @@ function setColorCoding() {
     }
   });
 }
+
+// save the event text in local storage when the save button is clicked
+$('.saveBtn').on('click', function(){
+  var timeBlockId = $(this).parent().attr('id');
+  var eventText = $(this).siblings('.description').val();
+
+  localStorage.setItem(timeBlockId, eventText);
+});
+
+//Load the saved events from local storage
+function loadEvents(){
+  $('.time-block').each(function(){
+    var timeBlockId = $(this).attr('id');
+    var eventText = localStorage.getItem(timeBlockId);
+
+    $(this).find('.description').val(eventText);
+  });
+};
+
