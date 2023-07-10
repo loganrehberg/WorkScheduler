@@ -64,3 +64,10 @@ function loadEvents(){
   });
 };
 
+// call the necessary functions when the page loads
+
+$(document).ready(function(){
+  displayCurrentDay();
+  setColorCoding();
+  loadEvents();
+});
