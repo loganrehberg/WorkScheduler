@@ -4,4 +4,8 @@ Welcome to the WorkScheduler repository! This repository contains an open-source
 
 ## Installation
 
-To install you can either clone the repo and open the webpage VIA the index.HTML or visit 
+To install you can either clone the repo and open the webpage VIA the index.HTML or visit https://loganrehberg.github.io/WorkScheduler/
+
+## Screenshot of the Deployed Website
+
+![Screenshot of the deployed webpage](/assets/images/screenshot.png "<WorkSchedulerScreenshot>")
